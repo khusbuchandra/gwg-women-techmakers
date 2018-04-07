@@ -25,6 +25,7 @@ class App extends Component {
     this.setCurrentCity = this.setCurrentCity.bind(this);
     this.setUserPosition = this.setUserPosition.bind(this);
     this.onPlaceSelected = this.onPlaceSelected.bind(this);
+    this.getStaticMap = this.getStaticMap.bind(this);
   }
 
  /* componentDidMount(){
@@ -60,10 +61,26 @@ class App extends Component {
   }
 
   setUserPosition(userPos){
-    if(userPos.lat){
+    if(userPos.lat !== undefined || userPos.lat !== 0 ){
       this.setState({userPos})
+      this.getStaticMap({userPos})
     }
   }
+
+  getStaticMap(userPos){
+    fetch(`https://maps.googleapis.com/maps/api/staticmap?center=${userPos.lat},${userPos.lng}&zoom=14&size=600x600&key=${process.env.REACT_APP_GKEY}`)
+    .then(function(response){
+       if (response.status !== 200) {
+       console.log('Looks like there was a problem with StaicMap. Status Code: ' +
+         response.status);
+       return;
+     }
+      console.log('got the staticMap')
+    })
+    .catch(function(err){
+     console.log('Fetch Error :-StaticMap', err);
+    })
+ }
 
   onPlaceSelected(id) {
     if (this.state.mouseOverPlace !== id) {
