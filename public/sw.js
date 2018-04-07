@@ -1,6 +1,7 @@
 // Set this to true for production
-
-// import idb from 'idb';
+//import idb from 'idb';
+//  self.importScripts('/idb.js');
+//  self.importScripts('/idbTest.js');
 
 const doCache = false;
 
